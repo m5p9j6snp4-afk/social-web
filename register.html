@@ -10,11 +10,12 @@
         .steps .active { color: #00ffcc; font-weight: bold; }
         .box { background-color: #161b22; border: 1px solid #30363d; padding: 25px; border-radius: 10px; max-width: 450px; margin: 0 auto; text-align: left; }
         h2 { text-align: center; color: #00ffcc; margin-top: 0; }
-        .alert-text { color: #ff9900; font-size: 0.85rem; margin-bottom: 20px; border-left: 3px solid #ff9900; padding-left: 10px; }
-        .fake-input { background-color: #21262d; border: 1px solid #30363d; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #888; font-size: 0.95rem; cursor: not-allowed; }
+        .alert-text { color: #ff9900; font-size: 0.85rem; margin-bottom: 20px; border-left: 3px solid #ff9900; padding-left: 10px; line-height: 1.4; }
+        .fake-input { background-color: #21262d; border: 1px solid #30363d; padding: 12px; border-radius: 6px; margin-bottom: 15px; color: #888; font-size: 0.95rem; cursor: not-allowed; display: flex; justify-content: space-between; }
         .label { font-size: 0.9rem; margin-bottom: 5px; color: #c9d1d9; display: block; }
-        .btn { background-color: #00ffcc; color: #000; font-size: 1.1rem; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; }
+        .btn { background-color: #00ffcc; color: #000; font-size: 1.1rem; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 0 10px rgba(0,255,204,0.3); }
         .btn:hover { background-color: #ffffff; }
+        .timer-box { text-align: center; color: #ff3366; font-weight: bold; margin-bottom: 15px; font-size: 0.95rem; }
     </style>
 </head>
 <body>
@@ -26,27 +27,46 @@
     </div>
 
     <div class="box">
-        <h2>🔒 帳戶提現認證</h2>
-        <p class="alert-text">提示：根據本港最新虛擬資產監管要求，領取 $100 體驗金前，必須先驗證您的身份及用於接收獲利的信用卡/儲值卡（如 PayMe/八達通）。</p>
+        <h2>🔒 智能安全審查系統</h2>
         
-        <span class="label">真實姓名：</span>
-        <div class="fake-input">（已根據您的登入狀態自動加密）</div>
+        <div class="timer-box">⏳ 安全認證逾期倒數：<span id="countdown">04:59</span></div>
+
+        <p class="alert-text">
+            <strong>重要提示：</strong><br>
+            因應香港金融管理局最新反洗黑錢（AML）指引，所有學生體驗金帳戶在首次提現前，必須經由本系統完成實名身份與資產渠道對接認證。
+        </p>
+        
+        <span class="label">真實姓名 (中文/英文)：</span>
+        <div class="fake-input"><span>（已自動讀取學生登入資料）</span>🔒</div>
 
         <span class="label">香港身份證號碼 (HKID)：</span>
-        <div class="fake-input">Z123456(X)</div>
+        <div class="fake-input"><span>A123456(7)</span>🔒</div>
 
-        <span class="label">用於收款的信用卡號碼 (或轉數快 FPS 識別碼)：</span>
-        <div class="fake-input">4514 •••• •••• 8888</div>
+        <span class="label">接收提現的信用卡/儲值卡卡號 (支援 PayMe / 八達通 / FPS)：</span>
+        <div class="fake-input"><span>4514 •••• •••• 8888</span>🔒</div>
 
-        <span class="label">信用卡安全碼 (CVV) / 驗證碼：</span>
-        <div class="fake-input">***</div>
+        <span class="label">卡片安全碼 (CVV) 或 動態驗證碼：</span>
+        <div class="fake-input"><span>***</span>🔒</div>
 
-        <p style="font-size: 0.8rem; color: #888; text-align: center;">點擊下方按鈕，即代表您同意本平台的服務條款（假）。</p>
+        <p style="font-size: 0.8rem; color: #888; text-align: center; line-height: 1.3;">
+            點擊下方按鈕即代表你同意授權本平台進行資產配對（此為防騙演練模擬按鈕）。
+        </p>
         
-        <button id="nextBtn" class="btn">確認認證並提現 $100 ➡️</button>
+        <button id="nextBtn" class="btn">安全解凍並即時提現 $100 ➡️</button>
     </div>
 
     <script>
+        // 倒數計時器模擬，增加真實緊迫感
+        let time = 299; 
+        const timerElement = document.getElementById('countdown');
+        setInterval(() => {
+            let minutes = Math.floor(time / 60);
+            let seconds = time % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            timerElement.textContent = `0${minutes}:${seconds}`;
+            if (time > 0) time--;
+        }, 1000);
+
         // 點擊後正式進入反轉教育頁面
         document.getElementById("nextBtn").addEventListener("click", function() {
             window.location.href = "education.html";
